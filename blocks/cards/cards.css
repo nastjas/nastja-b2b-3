@@ -29,3 +29,109 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+/* stylelint-disable no-descending-specificity */
+
+/* ---- MS Motorservice "categories" variant: branded product tiles ---- */
+.cards.categories > ul {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-medium);
+}
+
+.cards.categories > ul > li {
+  position: relative;
+  border: none;
+  border-top: 4px solid var(--ms-red);
+  background: linear-gradient(160deg, var(--ms-navy) 0%, var(--ms-blue) 100%);
+  color: var(--ms-white);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cards.categories > ul > li:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shape-shadow-2);
+}
+
+.cards.categories .cards-card-image {
+  line-height: 0;
+}
+
+.cards.categories .cards-card-image img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.cards.categories .cards-card-body {
+  margin: var(--spacing-medium);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xsmall);
+  min-height: 150px;
+}
+
+.cards.categories .cards-card-body p:first-child strong {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.cards.categories .cards-card-body p {
+  color: var(--ms-white);
+}
+
+.cards.categories .cards-card-body a {
+  margin-top: auto;
+  color: var(--ms-white);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.cards.categories .cards-card-body a::after {
+  content: ' →';
+}
+
+.cards.categories .cards-card-body a:hover {
+  text-decoration: underline;
+}
+
+/* ---- MS Motorservice "news" variant: story cards ---- */
+.cards.news > ul {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+.cards.news > ul > li {
+  border: var(--shape-border-width-1) solid var(--color-neutral-300);
+  display: flex;
+  flex-direction: column;
+}
+
+.cards.news .cards-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxsmall);
+}
+
+.cards.news .cards-card-body p:first-child {
+  color: var(--ms-blue);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+}
+
+.cards.news .cards-card-body p:nth-child(2) strong {
+  font-size: 1.25rem;
+  color: var(--ms-navy);
+}
+
+.cards.news .cards-card-body a {
+  margin-top: var(--spacing-xsmall);
+  color: var(--ms-blue);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.cards.news .cards-card-body a:hover {
+  text-decoration: underline;
+}

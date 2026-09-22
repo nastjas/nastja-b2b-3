@@ -1,0 +1,186 @@
+/* Dashboard shell (nav, top bar, layout) — must load via CSS @import; JS cannot import .css in the browser. */
+@import url('../bodea-dashboard/bodea-dashboard.css');
+
+/*
+ * Bodea Complaints & Returns — MOCK-UP styles.
+ * Reuses the dashboard shell (.bodea-dashboard / .bodea-dashboard-content).
+ */
+
+.bodea-complaints__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.bodea-complaints__title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bodea-complaints__title {
+  margin: 0;
+  font-size: 24px;
+  color: var(--ms-navy, #00406e);
+}
+
+.bodea-complaints__mock-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fff4d6;
+  color: #7a5b00;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.bodea-complaints__new-btn {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--ms-blue, #007ec1);
+  color: #fff;
+  font-weight: 700;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.bodea-complaints__note {
+  margin: 0 0 20px;
+  color: #5b6572;
+  font-size: 14px;
+  max-width: 780px;
+}
+
+/* Summary chips */
+.bodea-complaints__summary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.bodea-complaints__chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #e5e9ef;
+  border-left: 4px solid #c9d2dd;
+}
+
+.bodea-complaints__chip-count {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ms-navy, #00406e);
+}
+
+.bodea-complaints__chip-label {
+  font-size: 12px;
+  color: #5b6572;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.bodea-complaints__chip--warning { border-left-color: #e6a700; }
+.bodea-complaints__chip--info { border-left-color: var(--ms-blue, #007ec1); }
+.bodea-complaints__chip--positive { border-left-color: #2e8b57; }
+.bodea-complaints__chip--neutral { border-left-color: #9aa4b1; }
+
+/* Table */
+.bodea-complaints__table-card {
+  background: #fff;
+  border: 1px solid #e5e9ef;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.bodea-complaints__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.bodea-complaints__table thead th {
+  text-align: left;
+  padding: 14px 16px;
+  background: #f6f8fb;
+  color: #5b6572;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid #e5e9ef;
+}
+
+.bodea-complaints__table tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #eef1f5;
+  vertical-align: middle;
+  color: #26303b;
+}
+
+.bodea-complaints__ref {
+  font-weight: 700;
+  color: var(--ms-navy, #00406e);
+}
+
+.bodea-complaints__product {
+  display: block;
+  font-weight: 600;
+}
+
+.bodea-complaints__sku {
+  display: block;
+  font-size: 12px;
+  color: #8791a0;
+}
+
+.bodea-complaints__badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #eef1f5;
+  color: #5b6572;
+}
+
+.bodea-complaints__badge--warning { background: #fff4d6; color: #7a5b00; }
+.bodea-complaints__badge--info { background: #e3f0fa; color: #0069a3; }
+.bodea-complaints__badge--positive { background: #e4f4ea; color: #1f6b41; }
+.bodea-complaints__badge--neutral { background: #eef1f5; color: #5b6572; }
+
+.bodea-complaints__link {
+  border: 1px solid #cbd4df;
+  background: #fff;
+  color: #5b6572;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: not-allowed;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (min-width: 900px) {
+  .bodea-complaints__summary {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

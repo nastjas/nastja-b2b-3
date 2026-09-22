@@ -1,1 +1,68 @@
 /* stylelint-disable no-empty-source */
+
+/*
+ * When the targeted block does NOT match (guest / wrong group) it renders empty
+ * (no heading) and must collapse to zero height — so we only apply banner
+ * styling when there is actual content (an <h3>). This keeps the homepage free
+ * of any gap for non-matching visitors.
+ */
+.targeted-block:has(h3) {
+  background: linear-gradient(90deg, var(--ms-navy, #00406e), var(--ms-blue, #007ec1));
+  color: #fff;
+  border-radius: 12px;
+  padding: 28px 28px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.targeted-block:has(h3)::before {
+  content: 'Platinum';
+  align-self: flex-start;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #e9c46a;
+  color: #3a2e00;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.targeted-block:has(h3) h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.6rem;
+}
+
+.targeted-block:has(h3) p {
+  margin: 0;
+  color: #fff;
+  max-width: 60ch;
+}
+
+.targeted-block:has(h3) a {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  background: var(--ms-red, #d10019);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.targeted-block:has(h3) a:hover {
+  background: #b00016;
+}
+
+@media (min-width: 900px) {
+  .targeted-block:has(h3) {
+    padding: 34px 40px 36px;
+  }
+
+  .targeted-block:has(h3) h3 {
+    font-size: 1.9rem;
+  }
+}

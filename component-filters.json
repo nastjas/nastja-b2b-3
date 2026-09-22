@@ -54,6 +54,10 @@
     ]
   },
   {
+    "id": "bodea-address-book",
+    "components": []
+  },
+  {
     "id": "cards",
     "components": [
       "card"

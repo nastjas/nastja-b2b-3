@@ -1,0 +1,236 @@
+/*
+ * Product Finder ("Find My Product") — guided parts finder page.
+ */
+
+.product-finder {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 8px 0 24px;
+}
+
+.product-finder__title {
+  color: var(--ms-navy, #00406e);
+  margin: 0 0 8px;
+}
+
+.product-finder__intro {
+  color: #5b6572;
+  margin: 0 0 24px;
+  font-size: 1.05rem;
+}
+
+/* Tabs */
+.product-finder__tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid #e5e9ef;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+
+.product-finder__tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 14px 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #5b6572;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.product-finder__tab:hover {
+  color: var(--ms-blue, #007ec1);
+}
+
+.product-finder__tab[aria-selected='true'] {
+  color: var(--ms-navy, #00406e);
+  border-bottom-color: var(--ms-red, #d10019);
+}
+
+/* Panels */
+.product-finder__panels {
+  background: #f6f8fb;
+  border: 1px solid #e5e9ef;
+  border-top: 0;
+  border-radius: 0 0 12px 12px;
+  padding: 28px;
+}
+
+.product-finder__panel[hidden] {
+  display: none;
+}
+
+.product-finder__form {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.product-finder__form--grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.product-finder__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+}
+
+.product-finder__field--grow {
+  flex: 1 1 320px;
+}
+
+.product-finder__field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ms-navy, #00406e);
+}
+
+.product-finder__field input,
+.product-finder__field select {
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid #cbd4df;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  color: #26303b;
+}
+
+.product-finder__field input:focus,
+.product-finder__field select:focus {
+  outline: 2px solid var(--ms-blue, #007ec1);
+  outline-offset: 1px;
+  border-color: var(--ms-blue, #007ec1);
+}
+
+.product-finder__submit {
+  height: 46px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--ms-red, #d10019);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.product-finder__submit:hover {
+  background: #b00016;
+}
+
+.product-finder__submit:disabled {
+  background: #b9c2ce;
+  cursor: not-allowed;
+}
+
+.product-finder__hint {
+  margin: 16px 0 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* Roadmap / vehicle mock */
+.product-finder__roadmap-badge {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fff4d6;
+  color: #7a5b00;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.product-finder__form--vehicle select:disabled {
+  background: #eef1f5;
+  color: #9aa4b1;
+}
+
+/* Chips */
+.product-finder__chips {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product-finder__chip-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.product-finder__chip-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #8791a0;
+  margin-right: 4px;
+}
+
+.product-finder__chip {
+  display: inline-block;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #eef2f7;
+  color: var(--ms-navy, #00406e);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.product-finder__chip:hover {
+  background: var(--ms-blue, #007ec1);
+  color: #fff;
+}
+
+.product-finder__chip--recent {
+  background: #fff;
+  border: 1px solid #cbd4df;
+  font-weight: 400;
+}
+
+.product-finder__help {
+  margin-top: 24px;
+  color: #5b6572;
+}
+
+.product-finder__help a {
+  color: var(--ms-blue, #007ec1);
+  font-weight: 600;
+}
+
+@media (min-width: 600px) {
+  .product-finder__form--grid {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: end;
+  }
+
+  .product-finder__form--grid .product-finder__submit {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+}
+
+@media (min-width: 900px) {
+  .product-finder__form--grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .product-finder__form--grid .product-finder__field--grow {
+    grid-column: 1 / -1;
+  }
+}

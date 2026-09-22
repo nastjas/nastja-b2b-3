@@ -145,15 +145,22 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
 
 /* brand */
 header nav .nav-brand {
-  min-width: 128px;
+  min-width: 180px;
 }
 
 header nav .nav-brand a {
   grid-area: brand;
-  flex-basis: 128px;
-  font: var(--type-headline-1-font);
-  letter-spacing: var(--type-headline-1-letter-spacing);
-  font-weight: bold;
+  flex-basis: auto;
+  display: inline-block;
+  width: 210px;
+  height: 40px;
+
+  /* Logo served from the code bus (not the content pipeline) */
+  background: url('/icons/infineon-logo.svg') no-repeat left center;
+  background-size: contain;
+  overflow: hidden;
+  white-space: nowrap;
+  text-indent: -9999px;
 }
 
 li.nav-drop img {
@@ -164,8 +171,9 @@ li.nav-drop img {
 }
 
 header nav .nav-brand img {
-  width: 128px;
-  height: auto;
+  width: auto;
+  height: 38px;
+  display: block;
 }
 
 /* sections */
@@ -208,6 +216,11 @@ header nav .nav-sections ul>li ul>li {
 }
 
 header nav .nav-sections ul>li:empty {
+  display: none;
+}
+
+/* Auth-gated nav entries (e.g. Dashboard) hidden for guests */
+header nav .nav-sections ul>li[hidden] {
   display: none;
 }
 

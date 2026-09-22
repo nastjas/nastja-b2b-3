@@ -1,0 +1,9 @@
+# Bodea dashboard blocks cloned verbatim from the Continental reference project
+blocks/bodea-address-book/**
+blocks/bodea-company-users/**
+blocks/bodea-complaints/**
+blocks/bodea-dashboard/**
+blocks/bodea-invoices-list/**
+blocks/bodea-order-new-delivery/**
+blocks/bodea-reports/**
+blocks/bodea-orders-list/**

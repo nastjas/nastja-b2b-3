@@ -146,3 +146,117 @@
   overflow: hidden;
   white-space: nowrap;
 }
+
+/* ---- MS Motorservice PDP extras: brand, availability, notify ---- */
+.product-details__ms-brand {
+  margin: 4px 0 8px;
+}
+
+.product-details .ms-brand--logo {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: var(--shape-border-radius-1, 3px);
+  background: var(--ms-brand-accent, var(--ms-blue));
+  color: var(--ms-white);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.product-details .ms-brand--text {
+  margin: 0;
+  color: var(--color-neutral-700);
+}
+
+.product-details .ms-brand--text .ms-brand__label {
+  font-weight: 700;
+}
+
+.product-details__ms-availability {
+  margin: 8px 0 4px;
+}
+
+.product-details .ms-avail {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.product-details .ms-avail__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.product-details .ms-avail--in .ms-avail__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2e9b4e;
+  box-shadow: 0 0 0 3px rgb(46 155 78 / 18%);
+}
+
+.product-details .ms-avail--in .ms-avail__label {
+  color: #2e7d3a;
+}
+
+.product-details .ms-avail__countdown {
+  font-size: 0.9rem;
+  color: var(--color-neutral-800);
+}
+
+.product-details .ms-avail--out .ms-avail__label {
+  color: var(--ms-red);
+  font-weight: 700;
+}
+
+.product-details .ms-notify {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.product-details .ms-notify__input {
+  flex: 1 1 220px;
+  min-width: 200px;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--color-neutral-400);
+  border-radius: var(--shape-border-radius-1, 3px);
+  font: inherit;
+}
+
+.product-details .ms-notify__btn {
+  height: 42px;
+  padding: 0 20px;
+  border: none;
+  border-radius: var(--shape-border-radius-1, 3px);
+  background: var(--ms-navy);
+  color: var(--ms-white);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.product-details .ms-notify__btn:hover {
+  background: var(--ms-blue-dark);
+}
+
+.product-details .ms-notify__btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.product-details .ms-notify__msg {
+  margin: 4px 0 0;
+  color: #2e7d3a;
+  font-size: 0.9rem;
+}
+
+.product-details .ms-notify__msg:empty {
+  display: none;
+}

@@ -71,3 +71,34 @@ footer .footer p {
         padding: 40px 32px 24px;
     }
 }
+
+/* ---- MS Motorservice footer link columns ---- */
+footer .columns.footer-links h4 {
+    color: var(--ms-navy);
+    margin: 0 0 var(--spacing-small);
+}
+
+footer .columns.footer-links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xsmall);
+}
+
+footer .columns.footer-links a {
+    color: var(--color-neutral-800);
+    text-decoration: none;
+}
+
+footer .columns.footer-links a:hover {
+    color: var(--ms-blue);
+    text-decoration: underline;
+}
+
+footer .footer > div > p:first-of-type {
+    margin-top: var(--spacing-big);
+    font-weight: 700;
+    color: var(--ms-navy);
+}

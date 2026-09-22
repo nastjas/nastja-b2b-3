@@ -35,3 +35,98 @@
     padding: 40px 32px;
   }
 }
+
+/* ---- MS Motorservice "welcome" hero variant ---- */
+.hero.welcome {
+  display: flex;
+  align-items: center;
+  min-height: 480px;
+  padding: 64px 24px;
+  color: var(--ms-white);
+
+  /* establish a stacking context so image < gradient < content layer cleanly */
+  z-index: 0;
+}
+
+/* hero.js moves the picture to be a direct child (full-bleed background) */
+.hero.welcome > picture {
+  z-index: 0;
+}
+
+.hero.welcome::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    100deg,
+    rgb(0 51 88 / 88%) 0%,
+    rgb(0 64 110 / 70%) 45%,
+    rgb(0 64 110 / 20%) 100%
+  );
+}
+
+.hero.welcome > div {
+  position: relative;
+  z-index: 2;
+  max-width: 1264px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero.welcome > div > div {
+  max-width: 620px;
+  padding: 32px 36px;
+  border-radius: 10px;
+  background: rgb(0 32 56 / 78%);
+  box-shadow: 0 8px 30px rgb(0 0 0 / 25%);
+}
+
+.hero.welcome p {
+  color: var(--ms-white);
+  text-shadow: 0 1px 3px rgb(0 0 0 / 45%);
+}
+
+.hero.welcome > div > div > p:first-of-type {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--ms-white);
+  opacity: 0.85;
+  margin-bottom: var(--spacing-xsmall);
+}
+
+.hero.welcome h1 {
+  color: var(--ms-white);
+  margin: 0 0 var(--spacing-small);
+  font-size: 3rem;
+  line-height: 1.1;
+  text-align: left;
+  max-width: none;
+  text-shadow: 0 2px 6px rgb(0 0 0 / 45%);
+}
+
+.hero.welcome a {
+  display: inline-block;
+  margin-top: var(--spacing-small);
+  padding: 12px 28px;
+  background-color: var(--ms-red);
+  color: var(--ms-white);
+  font-weight: 700;
+  border-radius: var(--shape-border-radius-1);
+  text-decoration: none;
+}
+
+.hero.welcome a:hover {
+  background-color: #b00016;
+}
+
+@media (min-width: 900px) {
+  .hero.welcome {
+    min-height: 560px;
+  }
+
+  .hero.welcome h1 {
+    font-size: 3.75rem;
+  }
+}

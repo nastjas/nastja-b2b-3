@@ -1,0 +1,33 @@
+:root:root,
+.dropin-design.dropin-design {
+  --infineon-red: #ec1840;
+  --infineon-red-dark: #c71035;
+  --infineon-teal: #0a8276;
+  --infineon-teal-dark: #08685f;
+  --infineon-navy: #1b2a41;
+  --infineon-surface: #f5f7f8;
+  --ms-red: var(--infineon-red);
+  --ms-blue: var(--infineon-teal);
+  --ms-blue-dark: var(--infineon-teal-dark);
+  --ms-navy: var(--infineon-navy);
+  --ms-white: #fff;
+  --ms-brand-accent: var(--infineon-red);
+  --type-base-font-family: arial, helvetica, system-ui, sans-serif;
+  --color-brand-300: #f36b84;
+  --color-brand-500: var(--infineon-red);
+  --color-brand-600: var(--infineon-red-dark);
+  --color-brand-700: var(--infineon-navy);
+  --color-button-active: var(--infineon-red-dark);
+  --color-button-hover: var(--infineon-red-dark);
+  --shape-border-radius-1: 2px;
+  --shape-border-radius-2: 4px;
+  --shape-border-radius-3: 4px;
+}
+
+main h1,
+main h2,
+main h3,
+main h4 {
+  color: var(--infineon-navy);
+  letter-spacing: 0;
+}
