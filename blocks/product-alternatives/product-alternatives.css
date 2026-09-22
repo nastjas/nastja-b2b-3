@@ -1,0 +1,136 @@
+.product-alternatives {
+  margin: 32px 0;
+}
+
+.product-alternatives__title {
+  font-size: 1.4rem;
+  color: var(--ms-navy, #00406e);
+  margin: 0 0 16px;
+}
+
+.product-alternatives__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.product-alternatives__card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.product-alternatives__card:hover {
+  border-color: var(--ms-blue, #007ec1);
+  box-shadow: 0 6px 18px rgb(0 64 110 / 12%);
+}
+
+.product-alternatives__media {
+  aspect-ratio: 1 / 1;
+  background: #f5f7fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-alternatives__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.product-alternatives__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px 16px;
+}
+
+.product-alternatives__brand {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ms-blue, #007ec1);
+}
+
+.product-alternatives__name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1f2a37;
+  line-height: 1.3;
+}
+
+.product-alternatives__price {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ms-navy, #00406e);
+  margin-top: 2px;
+}
+
+.product-alternatives__stock {
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.product-alternatives__stock::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.product-alternatives__stock--in {
+  color: #1f7a3d;
+}
+
+.product-alternatives__stock--in::before {
+  background: #1f9d4d;
+}
+
+.product-alternatives__stock--out {
+  color: #a3281a;
+}
+
+.product-alternatives__stock--out::before {
+  background: #d10019;
+}
+
+/* Out-of-stock fallback: highlight the whole block */
+.product-alternatives--priority {
+  border: 1px solid #f0c9cd;
+  background: #fdf5f6;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.product-alternatives--priority .product-alternatives__title {
+  color: var(--ms-red, #d10019);
+}
+
+@media (min-width: 600px) {
+  .product-alternatives__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .product-alternatives__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .product-alternatives__title {
+    font-size: 1.6rem;
+  }
+}

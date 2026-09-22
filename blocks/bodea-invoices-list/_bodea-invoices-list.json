@@ -1,0 +1,23 @@
+{
+  "definitions": [{
+    "title": "Infineon Invoices List",
+    "id": "bodea-invoices-list",
+    "model": "bodea-invoices-list",
+    "plugins": {
+      "da": {
+        "type": "key-value-block"
+      }
+    }
+  }],
+  "models": [{
+    "id": "bodea-invoices-list",
+    "fields": [
+      {
+        "component": "number",
+        "name": "page-size",
+        "label": "Page Size"
+      }
+    ]
+  }],
+  "filters": []
+}

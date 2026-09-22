@@ -375,6 +375,20 @@ export function rootLink(link) {
 }
 
 /**
+ * Resolves an absolute code-relative path against the current code base path.
+ * Used by the bodea dashboard blocks to reference block assets.
+ * @param {string} absolutePath e.g. "/blocks/bodea-dashboard/foo.svg"
+ * @returns {string} the path prefixed with window.hlx.codeBasePath when set
+ */
+export function getCodeAssetUrl(absolutePath) {
+  const path = absolutePath.startsWith('/') ? absolutePath : `/${absolutePath}`;
+  const base = typeof window !== 'undefined' && window.hlx?.codeBasePath != null
+    ? window.hlx.codeBasePath
+    : '';
+  return `${base}${path}`;
+}
+
+/**
  * Decorates Columns Template to the main element.
  * @param {Element} doc The document element
  */

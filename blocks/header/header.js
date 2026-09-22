@@ -10,6 +10,7 @@ import { fetchPlaceholders, getProductLink, rootLink } from '../../scripts/comme
 import renderAuthCombine from './renderAuthCombine.js';
 import { renderAuthDropdown } from './renderAuthDropdown.js';
 import renderSellerAssistedBuyingBanner from './renderSellerAssistedBuyingBanner.js';
+import initPlatinumBanner from '../../scripts/platinum-banner.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -219,6 +220,27 @@ export default async function decorate(block) {
           }
         });
       });
+  }
+
+  // Gate nav entries by auth state (top-level items):
+  //  - Authenticated only: My Account (dropdown), Quick Order, Dashboard.
+  //  - Guests only:        Register, Request Form.
+  const topLevelNavItems = navSections
+    ? [...navSections.querySelectorAll('.default-content-wrapper > ul > li')]
+    : [];
+  const authedSel = 'a[href="/customer/account"], a[href="/dashboard"], a[href="/quick-order"]';
+  const guestSel = 'a[href="/customer/create"], a[href="/request-form"]';
+  const authedOnlyItems = topLevelNavItems.filter((li) => li.querySelector(authedSel));
+  const guestOnlyItems = topLevelNavItems.filter(
+    (li) => li.querySelector(guestSel) && !li.querySelector(authedSel),
+  );
+  if (authedOnlyItems.length || guestOnlyItems.length) {
+    const applyAuthVisibility = (authed) => {
+      authedOnlyItems.forEach((li) => { li.hidden = !authed; });
+      guestOnlyItems.forEach((li) => { li.hidden = Boolean(authed); });
+    };
+    applyAuthVisibility(Boolean(events.lastPayload('authenticated')));
+    events.on('authenticated', (authed) => applyAuthVisibility(Boolean(authed)), { eager: true });
   }
 
   const navTools = nav.querySelector('.nav-tools');
@@ -572,4 +594,7 @@ export default async function decorate(block) {
   if (isAuthenticated && getConfigValue('commerce-companies-enabled') === true) {
     await (await import('./renderCompanySwitcher.js')).default(navTools);
   }
+
+  /** Platinum Buyers personalised welcome banner (under the nav) */
+  initPlatinumBanner();
 }

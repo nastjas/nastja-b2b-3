@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 96" role="img" aria-labelledby="title desc">
+  <title id="title">Infineon</title>
+  <desc id="desc">Infineon text wordmark for the demo storefront</desc>
+  <rect width="360" height="96" fill="none"/>
+  <path d="M18 70C74 29 165 18 335 28" fill="none" stroke="#ec1840" stroke-width="8" stroke-linecap="round"/>
+  <text x="24" y="68" fill="#1b2a41" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700" letter-spacing="-2">Infineon</text>
+</svg>

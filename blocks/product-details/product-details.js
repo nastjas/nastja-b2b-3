@@ -125,7 +125,9 @@ export default async function decorate(block) {
       </div>
       <div class="product-details__right-column">
         <div class="product-details__header"></div>
+        <div class="product-details__ms-brand"></div>
         <div class="product-details__price"></div>
+        <div class="product-details__ms-availability"></div>
         <div class="product-details__gallery"></div>
         <div class="product-details__short-description"></div>
         <div class="product-details__gift-card-options"></div>
@@ -150,6 +152,8 @@ export default async function decorate(block) {
   const $gallery = fragment.querySelector('.product-details__gallery');
   const $header = fragment.querySelector('.product-details__header');
   const $price = fragment.querySelector('.product-details__price');
+  const $msBrand = fragment.querySelector('.product-details__ms-brand');
+  const $msAvailability = fragment.querySelector('.product-details__ms-availability');
   const $galleryMobile = fragment.querySelector('.product-details__right-column .product-details__gallery');
   const $shortDescription = fragment.querySelector('.product-details__short-description');
   const $options = fragment.querySelector('.product-details__options');
@@ -517,6 +521,9 @@ export default async function decorate(block) {
   events.on('pdp/data', (data) => {
     isOutOfStock = data?.inStock === false;
     addToCart.setProps((prev) => ({ ...prev, disabled: isOutOfStock }));
+    // Infineon demo PDP extras: product-family branding + availability/notify
+    renderMsBrand($msBrand, data);
+    renderMsAvailability($msAvailability, data);
   }, { eager: true });
 
   events.on('pdp/valid', (valid) => {
@@ -752,7 +759,7 @@ function setMetaTags(product) {
     return;
   }
 
-  const price = product.prices.final.minimumAmount ?? product.prices.final.amount;
+  const price = product?.prices?.final?.minimumAmount ?? product?.prices?.final?.amount;
 
   createMetaTag('title', product.metaTitle || product.name, 'name');
   createMetaTag('description', product.metaDescription, 'name');
@@ -763,11 +770,16 @@ function setMetaTags(product) {
   createMetaTag('og:title', product.metaTitle || product.name, 'property');
   createMetaTag('og:url', window.location.href, 'property');
   const mainImage = product?.images?.filter((image) => image.roles.includes('thumbnail'))[0];
-  const metaImage = mainImage?.url || product?.images[0]?.url;
+  const metaImage = mainImage?.url || product?.images?.[0]?.url;
   createMetaTag('og:image', metaImage, 'property');
   createMetaTag('og:image:secure_url', metaImage, 'property');
-  createMetaTag('product:price:amount', price.value, 'property');
-  createMetaTag('product:price:currency', price.currency, 'property');
+  // Guard against a missing price (e.g. complex products with no single amount, or
+  // a price that has not resolved yet): skip the price meta tags instead of throwing,
+  // which would abort PDP decoration.
+  if (price?.value != null) {
+    createMetaTag('product:price:amount', price.value, 'property');
+    createMetaTag('product:price:currency', price.currency, 'property');
+  }
 }
 
 /**
@@ -867,4 +879,168 @@ function initQuickOrderGridOrdering(product, variants) {
   events.emit('quick-order/grid-ordering-variants', extendedVariants);
 
   return extendedVariants;
+}
+
+/* ---------------------------------------------------------------------------
+ * Infineon demo PDP extras
+ * 1) Product-family badge vs. text label
+ * 2) In-stock indicator with same-day delivery cutoff countdown
+ * 3) "Not available" marking with a back-in-stock notify option
+ * ------------------------------------------------------------------------- */
+
+// Own manufacturer brands → shown as a logo-style badge (accent colour).
+// Any brand not listed here is treated as third-party → plain text.
+const MS_OWN_BRANDS = {
+  aurix: '#ec1840',
+  coolsic: '#0a8276',
+  coolgan: '#0a8276',
+  xensiv: '#1b2a41',
+  optiga: '#1b2a41',
+  psoc: '#ec1840',
+};
+
+// Same-day dispatch cutoff (local time) used for the delivery countdown.
+const MS_DELIVERY_CUTOFF_HOUR = 16;
+
+// Keep countdown interval handles off the DOM nodes (avoids param mutation).
+const msCountdownTimers = new WeakMap();
+
+function getProductAttribute(product, name) {
+  return product?.attributes?.find((attr) => attr.name === name)?.value;
+}
+
+function renderMsBrand(el, product) {
+  if (!el) return;
+  el.replaceChildren();
+  const brand = getProductAttribute(product, 'ms_brand')
+    || getProductAttribute(product, 'brand');
+  if (!brand) return;
+
+  const key = brand.trim().toLowerCase();
+
+  if (Object.prototype.hasOwnProperty.call(MS_OWN_BRANDS, key)) {
+    // Own manufacturer → logo-style badge (swap for official SVG logos later)
+    const badge = document.createElement('span');
+    badge.className = 'ms-brand ms-brand--logo';
+    badge.style.setProperty('--ms-brand-accent', MS_OWN_BRANDS[key]);
+    badge.setAttribute('aria-label', `Manufacturer: ${brand}`);
+    const name = document.createElement('span');
+    name.className = 'ms-brand__name';
+    name.textContent = brand;
+    badge.appendChild(name);
+    el.appendChild(badge);
+  } else {
+    // Third-party brand → plain text
+    const txt = document.createElement('p');
+    txt.className = 'ms-brand ms-brand--text';
+    const lbl = document.createElement('span');
+    lbl.className = 'ms-brand__label';
+    lbl.textContent = 'Brand: ';
+    const val = document.createElement('span');
+    val.textContent = brand;
+    txt.append(lbl, val);
+    el.appendChild(txt);
+  }
+}
+
+function startMsCountdown(el) {
+  const pad = (n) => String(n).padStart(2, '0');
+  const tick = () => {
+    const now = new Date();
+    const cutoff = new Date(now);
+    cutoff.setHours(MS_DELIVERY_CUTOFF_HOUR, 0, 0, 0);
+    let deliverWord = 'tomorrow';
+    if (now >= cutoff) {
+      cutoff.setDate(cutoff.getDate() + 1);
+      deliverWord = 'in 2 days';
+    }
+    const diff = cutoff - now;
+    const hrs = Math.floor(diff / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    el.textContent = `Order within ${hrs}h ${pad(mins)}m ${pad(secs)}s for delivery ${deliverWord}`;
+  };
+  tick();
+  msCountdownTimers.set(el, setInterval(tick, 1000));
+}
+
+function renderMsNotify(el, product) {
+  const wrap = document.createElement('div');
+  wrap.className = 'ms-avail ms-avail--out';
+
+  const label = document.createElement('span');
+  label.className = 'ms-avail__label';
+  label.textContent = 'Currently not available';
+  wrap.appendChild(label);
+
+  const form = document.createElement('form');
+  form.className = 'ms-notify';
+
+  const input = document.createElement('input');
+  input.type = 'email';
+  input.required = true;
+  input.placeholder = 'Your email address';
+  input.className = 'ms-notify__input';
+  input.setAttribute('aria-label', 'Email address for back-in-stock notification');
+
+  const btn = document.createElement('button');
+  btn.type = 'submit';
+  btn.className = 'ms-notify__btn';
+  btn.textContent = 'Notify me';
+
+  form.append(input, btn);
+
+  const msg = document.createElement('p');
+  msg.className = 'ms-notify__msg';
+  msg.setAttribute('role', 'status');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const email = input.value.trim();
+    if (!email) return;
+    try {
+      localStorage.setItem(`ms-notify:${product?.sku ?? ''}`, email);
+    } catch (err) {
+      // localStorage may be unavailable; not critical for the notify demo
+    }
+    msg.textContent = `Thanks! We'll email ${email} as soon as this product is back in stock.`;
+    input.disabled = true;
+    btn.disabled = true;
+  });
+
+  wrap.append(form, msg);
+  el.appendChild(wrap);
+}
+
+function renderMsAvailability(el, product) {
+  if (!el) return;
+  // Stop a previous countdown before re-rendering (e.g. on variant change)
+  const prevCountdown = el.querySelector('.ms-avail__countdown');
+  if (prevCountdown) clearInterval(msCountdownTimers.get(prevCountdown));
+  el.replaceChildren();
+  if (!product?.sku) return;
+
+  if (product.inStock === false) {
+    renderMsNotify(el, product);
+    return;
+  }
+
+  const wrap = document.createElement('div');
+  wrap.className = 'ms-avail ms-avail--in';
+
+  const status = document.createElement('div');
+  status.className = 'ms-avail__status';
+  const dot = document.createElement('span');
+  dot.className = 'ms-avail__dot';
+  const label = document.createElement('span');
+  label.className = 'ms-avail__label';
+  label.textContent = 'In stock';
+  status.append(dot, label);
+
+  const countdown = document.createElement('div');
+  countdown.className = 'ms-avail__countdown';
+
+  wrap.append(status, countdown);
+  el.appendChild(wrap);
+  startMsCountdown(countdown);
 }

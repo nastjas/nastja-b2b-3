@@ -1,0 +1,15 @@
+{
+  "definitions": [{
+    "title": "Infineon New Order",
+    "id": "bodea-order-new-delivery",
+    "model": "bodea-order-new-delivery",
+    "plugins": {
+      "da": {
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  }],
+  "models": [],
+  "filters": []
+}

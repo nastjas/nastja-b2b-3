@@ -31,3 +31,39 @@
     order: unset;
   }
 }
+
+/* stylelint-disable no-descending-specificity */
+
+/* ---- MS Motorservice "teaser" variant ---- */
+.columns.teaser {
+  margin-block: var(--spacing-big);
+}
+
+.columns.teaser h4 {
+  color: var(--ms-navy);
+  margin-top: 0;
+}
+
+.columns.teaser p {
+  color: var(--color-neutral-800);
+}
+
+.columns.teaser a {
+  display: inline-block;
+  margin-top: var(--spacing-xsmall);
+  color: var(--ms-blue);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.columns.teaser a::after {
+  content: ' →';
+}
+
+.columns.teaser a:hover {
+  text-decoration: underline;
+}
+
+.columns.teaser img {
+  border-radius: var(--shape-border-radius-2);
+}

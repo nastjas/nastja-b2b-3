@@ -1,0 +1,72 @@
+.find-your-product {
+  background: linear-gradient(160deg, var(--ms-navy) 0%, var(--ms-blue) 100%);
+  color: var(--ms-white);
+  padding: var(--spacing-big) var(--spacing-medium);
+  border-radius: var(--shape-border-radius-2);
+}
+
+.find-your-product-title {
+  color: var(--ms-white);
+  margin: 0 0 var(--spacing-medium);
+}
+
+.find-your-product-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-small);
+  align-items: end;
+}
+
+.find-your-product .fyp-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxsmall);
+}
+
+.find-your-product .fyp-field label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ms-white);
+  opacity: 0.9;
+}
+
+.find-your-product .fyp-field select,
+.find-your-product .fyp-field input {
+  height: 48px;
+  padding: 0 12px;
+  border: none;
+  border-radius: var(--shape-border-radius-1);
+  background-color: var(--ms-white);
+  color: var(--color-neutral-900);
+  font: inherit;
+  font-size: 1rem;
+}
+
+.find-your-product .fyp-submit {
+  height: 48px;
+  padding: 0 28px;
+  border: none;
+  border-radius: var(--shape-border-radius-1);
+  background-color: var(--ms-red);
+  color: var(--ms-white);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.find-your-product .fyp-submit:hover {
+  background-color: #b00016;
+}
+
+@media (min-width: 900px) {
+  .find-your-product {
+    padding: var(--spacing-xbig);
+  }
+
+  .find-your-product-form {
+    grid-template-columns: 1fr 1fr 1.5fr auto;
+    gap: var(--spacing-medium);
+  }
+}

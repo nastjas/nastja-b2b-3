@@ -1,1 +1,62 @@
 /* add global styles that can be loaded post LCP here */
+
+/* Platinum Buyers welcome banner (under the navigation) */
+.platinum-banner {
+  margin: 0;
+  background: linear-gradient(90deg, var(--ms-navy, #00406e), var(--ms-blue, #007ec1));
+  color: #fff;
+}
+
+.platinum-banner__inner {
+  max-width: 1264px;
+  margin: 0 auto;
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+
+.platinum-banner__badge {
+  flex: none;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #e9c46a;
+  color: #3a2e00;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.platinum-banner__text {
+  flex: 1 1 auto;
+}
+
+.platinum-banner__cta {
+  flex: none;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.platinum-banner__cta:hover {
+  color: #e9c46a;
+}
+
+.platinum-banner__close {
+  flex: none;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+@media (max-width: 599px) {
+  .platinum-banner__cta {
+    display: none;
+  }
+}
