@@ -152,8 +152,29 @@ function setSectionVisibility(block, visible) {
   const section = block.closest('.section');
   if (section) {
     section.classList.add('product-links-section');
+    section.classList.remove('product-links-section--pending');
     section.hidden = !visible;
   }
+}
+
+function loadWhenNearViewport(block, callback) {
+  const section = block.closest('.section');
+  const target = section || block;
+
+  if (!window.IntersectionObserver) {
+    callback();
+    return;
+  }
+
+  block.hidden = true;
+  target.classList.add('product-links-section--pending');
+
+  const observer = new IntersectionObserver((entries) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    observer.disconnect();
+    callback();
+  }, { rootMargin: '400px 0px' });
+  observer.observe(target);
 }
 
 export default async function decorate(block) {
@@ -213,12 +234,13 @@ export default async function decorate(block) {
     }
   };
 
-  setSectionVisibility(block, false);
-
-  if (type === 'crosssell') {
-    events.on('cart/data', render);
-    await render(Cart.getCartDataFromCache());
-  } else {
-    await render();
-  }
+  loadWhenNearViewport(block, () => {
+    setSectionVisibility(block, false);
+    if (type === 'crosssell') {
+      events.on('cart/data', render);
+      render(Cart.getCartDataFromCache());
+    } else {
+      render();
+    }
+  });
 }

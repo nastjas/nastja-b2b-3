@@ -2,6 +2,11 @@
   background: var(--color-neutral-50);
 }
 
+.product-links-section.product-links-section--pending {
+  min-height: 1px;
+  padding-block: 0;
+}
+
 .product-links-section[hidden],
 .product-links[hidden] {
   display: none;
