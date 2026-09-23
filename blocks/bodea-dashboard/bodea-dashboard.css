@@ -51,13 +51,17 @@ body.dashboard-page > main {
   grid-row: unset;
 }
 
-/* Kill the EDS section wrapper constraints */
+/* Kill the EDS section wrapper constraints. `!important` on both `display`
+   declarations keeps this the single source of truth for section visibility
+   no matter what order per-block CSS files load in — a later-loaded block
+   stylesheet cannot silently re-show a non-dashboard section (or hide the
+   active one) and split main's width between two flexed sections. */
 body.dashboard-page main > .section {
-  display: none;
+  display: none !important;
 }
 
 body.dashboard-page main > .section.bodea-dashboard-section {
-  display: flex;
+  display: flex !important;
   flex: 1 1 100%;
   min-width: 0;
   padding: 0 !important;

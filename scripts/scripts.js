@@ -21,6 +21,7 @@ import {
   IS_UE,
   IS_DA,
 } from './commerce.js';
+import enhanceAccountWorkspace, { matchesWorkspacePath } from './account-workspace.js';
 
 /*
  * Trusted Types default policy.
@@ -226,6 +227,15 @@ async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
 
+  // /customer/account and /customer/company/* are restructured into the
+  // Bodea dashboard workspace shell later, in loadLazy (account-workspace.js)
+  // — once blocks are decorated and its CSS has loaded. Hide `main` for the
+  // duration so the CMS-authored "columns" template layout it starts from
+  // never gets a chance to paint once `body.appear` is added below.
+  if (matchesWorkspacePath(window.location.pathname)) {
+    document.body.classList.add('account-workspace-pending');
+  }
+
   const main = doc.querySelector('main');
   if (main) {
     try {
@@ -263,9 +273,7 @@ async function loadLazy(doc) {
 
   // Present /customer/account and /customer/company/* pages in the shared
   // Bodea dashboard workspace (left nav + top bar + full-width content).
-  import('./account-workspace.js').then(({ default: enhanceAccountWorkspace }) => (
-    enhanceAccountWorkspace(main)
-  )).catch(() => { /* non-critical enhancement */ });
+  enhanceAccountWorkspace(main).catch(() => { /* non-critical enhancement */ });
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
