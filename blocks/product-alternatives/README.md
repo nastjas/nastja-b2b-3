@@ -6,10 +6,11 @@ in particular as a fallback ("Ausweichprodukte") when the current product is
 
 ## Why this block
 
-The classic Admin-curated **related / up-sell / cross-sell** links are **not
-exposed by the Catalog Service** (verified: `relatedProducts` etc. are not
-queryable on the storefront GraphQL). This block therefore drives alternatives
-from product data that *is* available:
+Classic Admin-curated **related / up-sell / cross-sell** relationships are
+rendered by the separate Product Links block through Catalog Service
+`ProductView.links`. Product Alternatives serves a different purpose: explicit
+replacement products and an automatic same-group fallback when the current
+product is unavailable.
 
 1. **Curated** — the `ms_alternatives` product attribute: a comma/space separated
    list of SKUs you pick per product (deterministic).

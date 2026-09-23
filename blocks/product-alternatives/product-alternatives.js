@@ -8,9 +8,9 @@
  *   1. Curated: the `ms_alternatives` product attribute (comma/space separated SKUs).
  *   2. Automatic fallback: other products from the same `ms_product_group`.
  *
- * The classic Admin-curated related/upsell/cross-sell links are NOT exposed by
- * the Catalog Service, so we drive this from a product attribute (deterministic)
- * with a same-category fallback (always populated).
+ * This block is separate from the classic Admin-curated relationships exposed
+ * through `ProductView.links`: it provides explicit replacement products and a
+ * same-group fallback for the out-of-stock use case.
  *
  * When the current product is out of stock, the block is highlighted and moved
  * above the product details so shoppers immediately see in-stock alternatives.

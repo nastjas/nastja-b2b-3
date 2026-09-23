@@ -519,6 +519,48 @@
     ]
   },
   {
+    "id": "product-links",
+    "fields": [
+      {
+        "component": "select",
+        "name": "type",
+        "label": "Type",
+        "required": true,
+        "value": "related",
+        "options": [
+          {
+            "name": "Related",
+            "value": "related"
+          },
+          {
+            "name": "Up-sell",
+            "value": "upsell"
+          },
+          {
+            "name": "Cross-sell",
+            "value": "crosssell"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "number",
+        "name": "maximumItems",
+        "label": "Maximum Items",
+        "value": 4
+      },
+      {
+        "component": "text",
+        "name": "currentSku",
+        "label": "Current SKU"
+      }
+    ]
+  },
+  {
     "id": "product-list-page",
     "fields": [
       {

@@ -136,6 +136,49 @@ function buildSupportPageAutoBlock(main) {
   main.replaceChildren(section);
 }
 
+function createProductLinksSection(type, heading) {
+  const block = buildBlock('product-links', [
+    ['Type', type],
+    ['Heading', heading],
+    ['Maximum Items', '4'],
+  ]);
+  const section = document.createElement('div');
+  section.append(block);
+  return section;
+}
+
+function getMainSection(main, element) {
+  let section = element;
+  while (section?.parentElement && section.parentElement !== main) {
+    section = section.parentElement;
+  }
+  return section?.parentElement === main ? section : null;
+}
+
+/**
+ * Adds a storefront fallback for classic Commerce product links. Authors can
+ * replace these with configured Product Links blocks without changing code.
+ * @param {Element} main The container element
+ */
+function buildProductLinksAutoBlocks(main) {
+  if (IS_UE || main !== document.querySelector('main') || main.querySelector('.product-links')) {
+    return;
+  }
+
+  const productDetailsSection = getMainSection(main, main.querySelector('.product-details'));
+  if (productDetailsSection) {
+    const related = createProductLinksSection('related', 'Related products');
+    const upsell = createProductLinksSection('upsell', 'You may also like');
+    productDetailsSection.after(related, upsell);
+    return;
+  }
+
+  const cartSection = getMainSection(main, main.querySelector('.commerce-cart'));
+  if (cartSection) {
+    cartSection.after(createProductLinksSection('crosssell', 'Complete your order'));
+  }
+}
+
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
@@ -143,6 +186,7 @@ function buildSupportPageAutoBlock(main) {
 function buildAutoBlocks(main) {
   try {
     buildSupportPageAutoBlock(main);
+    buildProductLinksAutoBlocks(main);
 
     // auto load `*/fragments/*` references
     const fragments = [...main.querySelectorAll('a[href*="/fragments/"]')].filter((f) => !f.closest('.fragment'));

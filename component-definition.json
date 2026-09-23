@@ -589,6 +589,16 @@
           }
         },
         {
+          "title": "Product Links",
+          "id": "product-links",
+          "model": "product-links",
+          "plugins": {
+            "da": {
+              "type": "key-value-block"
+            }
+          }
+        },
+        {
           "title": "Product List Page",
           "id": "product-list-page",
           "model": "product-list-page",
