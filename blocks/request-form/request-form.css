@@ -38,7 +38,6 @@
 .request-form__req { color: var(--ms-red, #d10019); }
 
 .request-form__field input,
-.request-form__field select,
 .request-form__field textarea {
   padding: 12px 14px;
   border: 1px solid #cbd4df;
@@ -56,7 +55,6 @@
 }
 
 .request-form__field input:focus,
-.request-form__field select:focus,
 .request-form__field textarea:focus {
   outline: 2px solid var(--ms-blue, #007ec1);
   outline-offset: 1px;
