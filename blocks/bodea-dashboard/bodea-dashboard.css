@@ -45,8 +45,12 @@ body.dashboard-page > main {
 
 /* Kill the EDS section wrapper constraints */
 body.dashboard-page main > .section {
+  display: none;
+}
+
+body.dashboard-page main > .section.bodea-dashboard-section {
   display: flex;
-  flex: 1;
+  flex: 1 1 100%;
   min-width: 0;
   padding: 0 !important;
   margin: 0 !important;
@@ -55,7 +59,7 @@ body.dashboard-page main > .section {
 }
 
 /* Kill the inner div max-width / centering that styles.css applies */
-body.dashboard-page main > .section > div {
+body.dashboard-page main > .section.bodea-dashboard-section > div {
   max-width: 100% !important;
   padding: 0 !important;
   margin: 0 !important;
