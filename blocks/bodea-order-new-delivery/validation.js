@@ -61,6 +61,11 @@ function validateEquipment(state) {
       fields[`equipment-${index}-sku`] = 'Choose a product.';
     } else if (!getEquipmentProductBySku(line.sku)) {
       fields[`equipment-${index}-sku`] = 'Select a valid product.';
+    } else if (state.ui?.equipmentPricesLoaded) {
+      const price = state.ui?.equipmentPrices?.[line.sku];
+      if (!price || typeof price.value !== 'number') {
+        fields[`equipment-${index}-sku`] = 'Not available in your company catalog.';
+      }
     }
 
     const quantity = Number(line.quantity);

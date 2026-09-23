@@ -107,34 +107,6 @@ body.dashboard-page main > .section > div {
   color: var(--color-brand-500);
 }
 
-.commerce-invoices-shell__brand-mark {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  margin-right: 4px;
-  line-height: 0;
-}
-
-.commerce-invoices-shell__brand-mark:focus-visible {
-  outline: 2px solid var(--color-brand-500);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-.commerce-invoices-shell__brand-mark-img {
-  display: block;
-  width: 96px;
-  height: auto;
-  max-height: 30px;
-  object-fit: contain;
-  filter: invert(1);
-  opacity: 0.9;
-}
-
-.commerce-invoices-shell__brand-mark:hover .commerce-invoices-shell__brand-mark-img {
-  opacity: 1;
-}
-
 .commerce-invoices-shell__topbar-copy {
   min-width: 0;
 }
@@ -683,11 +655,6 @@ body.dashboard-page main > .section > div {
   .commerce-invoices-shell__topbar {
     padding: 0 16px;
     gap: 12px;
-  }
-
-  .commerce-invoices-shell__brand-mark-img {
-    width: 80px;
-    max-height: 26px;
   }
 
   .commerce-invoices-shell__page {

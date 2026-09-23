@@ -121,6 +121,13 @@ export const EQUIPMENT_STOCK_CAPACITY = {
  */
 export const PRIMARY_NAV_ITEMS = [
   {
+    id: 'overview',
+    label: 'Overview',
+    href: '/dashboard',
+    matchPaths: ['/dashboard'],
+    icon: 'dashboard',
+  },
+  {
     id: 'orders',
     label: 'Orders',
     href: '/order-list',

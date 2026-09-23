@@ -211,6 +211,16 @@ export default async function decorate(block) {
 
   guestAccountItems.forEach((item) => navList.insertBefore(item, accountItem));
 
+  // Promote "Dashboard" out of the Account dropdown into its own top-level nav
+  // item, placed directly next to Account. It stays authed-only (see below).
+  const dashboardItem = accountItem
+    ? [...accountItem.querySelectorAll('a[href]')]
+      .find((link) => matchesPath(link.href, '/dashboard'))?.closest('li')
+    : null;
+  if (dashboardItem && accountItem) {
+    navList.insertBefore(dashboardItem, accountItem.nextSibling);
+  }
+
   if (navSections) {
     navSections
       .querySelectorAll(':scope .default-content-wrapper > ul > li')
@@ -239,7 +249,7 @@ export default async function decorate(block) {
 
   const requestFormItem = [...(navSections?.querySelectorAll('a[href]') ?? [])]
     .find((link) => matchesPath(link.href, '/request-form'))?.closest('li');
-  const authedOnlyItems = accountItem ? [accountItem] : [];
+  const authedOnlyItems = [accountItem, dashboardItem].filter(Boolean);
   const guestOnlyItems = [...guestAccountItems, requestFormItem].filter(Boolean);
 
   if (authedOnlyItems.length || guestOnlyItems.length) {

@@ -1,0 +1,8 @@
+/* stylelint-disable no-empty-source */
+
+/**
+ * Alias block for `commerce-b2b-company-profile` — styling lives in
+ * `commerce-company-profile.css`; loaded via `@import` so EDS's automatic
+ * `<blockname>.css` fetch still resolves correctly for this class name.
+ */
+@import url('../commerce-company-profile/commerce-company-profile.css');

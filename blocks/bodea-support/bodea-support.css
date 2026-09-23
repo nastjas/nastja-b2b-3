@@ -1,0 +1,189 @@
+/* Dashboard shell (nav, top bar, layout) — must load via CSS @import. */
+@import url('../bodea-dashboard/bodea-dashboard.css');
+
+/* Support workspace */
+.bodea-support__header { margin-bottom: 20px; }
+
+.bodea-support__title {
+  margin: 0 0 4px;
+  font-size: 24px;
+  color: var(--ms-navy, #00406e);
+}
+
+.bodea-support__intro {
+  margin: 0;
+  color: #5b6572;
+  font-size: 14px;
+}
+
+/* Cards (shared look with Reports) */
+.bodea-support__card {
+  background: #fff;
+  border: 1px solid #e5e9ef;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.bodea-support__card-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.bodea-support__card-head h2 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--ms-navy, #00406e);
+}
+
+.bodea-support__demo {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #fff4d6;
+  color: #7a5b00;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Contact list */
+.bodea-support__contact-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bodea-support__contact-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.bodea-support__contact-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--color-informational-200, #e8f2fa);
+  color: var(--ms-blue, #007ec1);
+}
+
+.bodea-support__contact-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bodea-support__contact-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #5b6572;
+}
+
+.bodea-support__contact-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ms-navy, #00406e);
+}
+
+.bodea-support__contact-note {
+  font-size: 12px;
+  color: #7c8794;
+}
+
+/* Form */
+.bodea-support__form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.bodea-support__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bodea-support__field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ms-navy, #00406e);
+}
+
+.bodea-support__req { color: var(--ms-red, #d10019); }
+
+.bodea-support__field input,
+.bodea-support__field select,
+.bodea-support__field textarea {
+  padding: 12px 14px;
+  border: 1px solid #cbd4df;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #fff;
+  color: #26303b;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.bodea-support__field textarea { resize: vertical; }
+
+.bodea-support__field input:focus,
+.bodea-support__field select:focus,
+.bodea-support__field textarea:focus {
+  outline: 2px solid var(--ms-blue, #007ec1);
+  outline-offset: 1px;
+  border-color: var(--ms-blue, #007ec1);
+}
+
+.bodea-support__submit {
+  justify-self: start;
+  padding: 12px 28px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--ms-blue, #005da9);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.bodea-support__submit:hover { background: var(--ms-blue-dark, #004a87); }
+
+.bodea-support__submit:disabled {
+  background: #b9c2ce;
+  cursor: not-allowed;
+}
+
+.bodea-support__status {
+  margin: 4px 0 0;
+  font-size: 0.95rem;
+}
+
+.bodea-support__status--ok {
+  color: #1f6b41;
+  font-weight: 600;
+}
+
+.bodea-support__status--error {
+  color: #a3281a;
+  font-weight: 600;
+}
+
+@media (min-width: 600px) {
+  .bodea-support__form { grid-template-columns: 1fr 1fr; }
+  .bodea-support__field--full { grid-column: 1 / -1; }
+  .bodea-support__submit { grid-column: 1 / -1; }
+  .bodea-support__status { grid-column: 1 / -1; }
+}

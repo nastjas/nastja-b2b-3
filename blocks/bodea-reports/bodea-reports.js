@@ -246,6 +246,7 @@ function buildView() {
 
 export default function decorate(block) {
   document.body.classList.add('dashboard-page');
+  block.closest('.section')?.classList.add('bodea-dashboard-section');
   block.innerHTML = '';
   block.classList.add('bodea-dashboard');
 

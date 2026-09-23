@@ -1,7 +1,9 @@
 /**
  * Products offered in the order wizard.
- * The SKUs are Infineon demo products and fall back to configured demo prices
- * when they are not present in the connected Commerce catalog.
+ * The SKUs are Infineon demo products. Selecting/ordering a product requires a
+ * Commerce price to actually resolve for its SKU (see `fetchEquipmentSkuPrices`
+ * in `equipment-prices.js`) — products without a resolved company-catalog
+ * price are shown but disabled ("Not available in your company catalog").
  */
 export const EQUIPMENT_PRODUCTS = [
   {

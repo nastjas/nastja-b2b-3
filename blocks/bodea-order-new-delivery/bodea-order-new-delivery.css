@@ -885,6 +885,16 @@ main .bodea-order-new-delivery-container {
   background: var(--ond-blue-tint);
 }
 
+.ond-equipment-card.is-unavailable {
+  opacity: 0.6;
+  background: var(--color-neutral-100, var(--ond-page-bg));
+}
+
+.ond-equipment-card.is-unavailable .ond-qty-btn,
+.ond-equipment-card.is-unavailable .ond-qty-value {
+  cursor: not-allowed;
+}
+
 .ond-equipment-card__top {
   display: flex;
   gap: 16px;
@@ -963,10 +973,10 @@ main .bodea-order-new-delivery-container {
   color: var(--ond-text-muted);
 }
 
-.ond-equipment-card__price--muted {
+.ond-equipment-card__price--unavailable {
   font-weight: 600;
   font-size: 1.2rem;
-  color: var(--ond-text-muted);
+  color: var(--ond-error-text);
 }
 
 .ond-equipment-card__footer {

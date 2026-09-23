@@ -190,6 +190,7 @@ export default async function decorate(block) {
   }
 
   document.body.classList.add('dashboard-page', 'bodea-address-book-page');
+  block.closest('.section')?.classList.add('bodea-dashboard-section');
 
   block.textContent = '';
   block.classList.add('bodea-dashboard');

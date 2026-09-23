@@ -91,7 +91,6 @@ function buildSkeletonRows(count = 5) {
 function buildTopBar(navElement) {
   const topBar = document.createElement('div');
   topBar.className = 'commerce-invoices-shell__topbar';
-  const logoSrc = getCodeAssetUrl('/icons/infineon-logo.svg');
   topBar.innerHTML = `
     <button class="commerce-invoices-shell__menu-btn" aria-label="Toggle navigation" type="button">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -100,14 +99,6 @@ function buildTopBar(navElement) {
         <line x1="3" y1="18" x2="21" y2="18"/>
       </svg>
     </button>
-    <a class="commerce-invoices-shell__brand-mark" href="${rootLink('/')}" aria-label="Infineon home">
-      <img
-        class="commerce-invoices-shell__brand-mark-img"
-        src="${logoSrc}"
-        alt="Infineon"
-        width="96"
-      />
-    </a>
     <div class="commerce-invoices-shell__topbar-copy">
       <span class="commerce-invoices-shell__eyebrow">Customer Portal</span>
       <h1 class="commerce-invoices-shell__page-title">Invoices</h1>
@@ -139,6 +130,7 @@ function setTopBarCustomerName(block, customer) {
 
 function renderShell(block) {
   document.body.classList.add('dashboard-page');
+  block.closest('.section')?.classList.add('bodea-dashboard-section');
   block.innerHTML = '';
   block.classList.add('bodea-invoices-list', 'commerce-invoices-shell');
 
