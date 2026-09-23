@@ -119,12 +119,12 @@ export const EQUIPMENT_STOCK_CAPACITY = {
  * Left-hand navigation items.
  * `id` is used for active state detection (matched against pathname).
  */
-export const NAV_ITEMS = [
+export const PRIMARY_NAV_ITEMS = [
   {
-    id: 'dashboard',
-    label: 'Dashboard',
+    id: 'overview',
+    label: 'Overview',
     href: '/dashboard',
-    matchPaths: ['/', '/dashboard'],
+    matchPaths: ['/dashboard'],
     icon: 'dashboard',
   },
   {
@@ -142,42 +142,11 @@ export const NAV_ITEMS = [
     icon: 'invoices',
   },
   {
-    id: 'company-users',
-    label: 'Company Users',
-    href: '/users',
-    matchPaths: ['/users'],
-    icon: 'companyUsers',
-  },
-  {
-    id: 'complaints',
-    label: 'Complaints',
-    /** Mock-up complaints/returns workspace (RFP F-12). */
-    href: '/complaints',
-    matchPaths: ['/complaints'],
-    icon: 'complaints',
-  },
-  {
-    id: 'materials',
-    label: 'Order Products',
-    href: '/order',
-    matchPaths: ['/order', '/order-new-delivery', '/equipment'],
-    icon: 'materials',
-  },
-  {
-    id: 'quick-order',
-    label: 'Quick Order',
-    /** Boilerplate B2B quick-order page (fast article-number / CSV entry). */
-    href: '/quick-order',
-    matchPaths: ['/quick-order'],
-    icon: 'quickOrder',
-  },
-  {
-    id: 'locations',
-    label: 'Locations',
-    /** DA `locations` (`locations.html`) — address book (map + addresses). */
-    href: '/locations',
-    matchPaths: ['/locations'],
-    icon: 'locations',
+    id: 'returns',
+    label: 'Returns',
+    href: '/customer/returns',
+    matchPaths: ['/customer/returns', '/customer/return-details', '/customer/create-return'],
+    icon: 'returns',
   },
   {
     id: 'reports',
@@ -192,6 +161,80 @@ export const NAV_ITEMS = [
     href: '/support',
     matchPaths: ['/support'],
     icon: 'support',
+  },
+  {
+    id: 'materials',
+    label: 'Order Products',
+    href: '/order',
+    matchPaths: ['/order', '/order-new-delivery', '/equipment'],
+    icon: 'materials',
+  },
+  {
+    id: 'requisition-lists',
+    label: 'Requisition Lists',
+    href: '/customer/requisition-lists',
+    matchPaths: ['/customer/requisition-lists', '/customer/requisition-list-view'],
+    icon: 'requisitionLists',
+  },
+  {
+    id: 'quick-order',
+    label: 'Quick Order',
+    /** Boilerplate B2B quick-order page (fast article-number / CSV entry). */
+    href: '/quick-order',
+    matchPaths: ['/quick-order'],
+    icon: 'quickOrder',
+  },
+];
+
+export const ACCOUNT_NAV_ITEMS = [
+  {
+    id: 'account',
+    label: 'My Account',
+    href: '/customer/account',
+    matchPaths: ['/customer/account'],
+    icon: 'dashboard',
+  },
+  {
+    id: 'company-profile',
+    label: 'Company Profile',
+    href: '/customer/company/profile',
+    matchPaths: ['/customer/company/profile'],
+    icon: 'companyUsers',
+  },
+  {
+    id: 'company-structure',
+    label: 'Company Structure',
+    href: '/customer/company/structure',
+    matchPaths: ['/customer/company/structure'],
+    icon: 'companyUsers',
+  },
+  {
+    id: 'company-users',
+    label: 'Company Users',
+    href: '/customer/company/users',
+    matchPaths: ['/customer/company/users', '/users'],
+    icon: 'companyUsers',
+  },
+  {
+    id: 'company-roles',
+    label: 'Roles & Permissions',
+    href: '/customer/company/roles',
+    matchPaths: ['/customer/company/roles'],
+    icon: 'companyUsers',
+  },
+  {
+    id: 'company-credit',
+    label: 'Company Credit',
+    href: '/customer/company/credit',
+    matchPaths: ['/customer/company/credit'],
+    icon: 'invoices',
+  },
+  {
+    id: 'company-hierarchy',
+    label: 'Company Hierarchy',
+    href: '/customer/company/hierarchy',
+    matchPaths: ['/customer/company/hierarchy'],
+    icon: 'companyUsers',
   },
 ];
 

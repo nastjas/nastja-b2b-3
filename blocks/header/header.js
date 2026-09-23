@@ -1,5 +1,6 @@
 // Drop-in Tools
 import { events } from '@dropins/tools/event-bus.js';
+import { getCookie } from '@dropins/tools/lib.js';
 
 import { tryRenderAemAssetsImage } from '@dropins/tools/lib/aem/assets.js';
 import { getConfigValue } from '@dropins/tools/lib/aem/configs.js';
@@ -8,6 +9,7 @@ import { loadFragment } from '../fragment/fragment.js';
 import { fetchPlaceholders, getProductLink, rootLink } from '../../scripts/commerce.js';
 
 import renderAuthCombine from './renderAuthCombine.js';
+import { matchesPath } from './route-utils.js';
 import { renderAuthDropdown } from './renderAuthDropdown.js';
 import renderSellerAssistedBuyingBanner from './renderSellerAssistedBuyingBanner.js';
 import initPlatinumBanner from '../../scripts/platinum-banner.js';
@@ -196,6 +198,29 @@ export default async function decorate(block) {
   }
 
   const navSections = nav.querySelector('.nav-sections');
+  const navList = navSections?.querySelector('.default-content-wrapper > ul');
+  const topLevelNavItems = [...(navList?.children ?? [])];
+  const accountItem = topLevelNavItems.find((item) => [...item.querySelectorAll('a[href]')]
+    .some((link) => matchesPath(link.href, '/customer/account')));
+  const guestAccountItems = accountItem
+    ? ['/customer/login', '/customer/create']
+      .map((path) => [...accountItem.querySelectorAll('a[href]')]
+        .find((link) => matchesPath(link.href, path))?.closest('li'))
+      .filter(Boolean)
+    : [];
+
+  guestAccountItems.forEach((item) => navList.insertBefore(item, accountItem));
+
+  // Promote "Dashboard" out of the Account dropdown into its own top-level nav
+  // item, placed directly next to Account. It stays authed-only (see below).
+  const dashboardItem = accountItem
+    ? [...accountItem.querySelectorAll('a[href]')]
+      .find((link) => matchesPath(link.href, '/dashboard'))?.closest('li')
+    : null;
+  if (dashboardItem && accountItem) {
+    navList.insertBefore(dashboardItem, accountItem.nextSibling);
+  }
+
   if (navSections) {
     navSections
       .querySelectorAll(':scope .default-content-wrapper > ul > li')
@@ -222,28 +247,26 @@ export default async function decorate(block) {
       });
   }
 
-  // Gate nav entries by auth state (top-level items):
-  //  - Authenticated only: My Account (dropdown), Quick Order, Dashboard.
-  //  - Guests only:        Register, Request Form.
-  const topLevelNavItems = navSections
-    ? [...navSections.querySelectorAll('.default-content-wrapper > ul > li')]
-    : [];
-  const authedSel = 'a[href="/customer/account"], a[href="/dashboard"], a[href="/quick-order"]';
-  const guestSel = 'a[href="/customer/create"], a[href="/request-form"]';
-  const authedOnlyItems = topLevelNavItems.filter((li) => li.querySelector(authedSel));
-  const guestOnlyItems = topLevelNavItems.filter(
-    (li) => li.querySelector(guestSel) && !li.querySelector(authedSel),
-  );
+  const requestFormItem = [...(navSections?.querySelectorAll('a[href]') ?? [])]
+    .find((link) => matchesPath(link.href, '/request-form'))?.closest('li');
+  const authedOnlyItems = [accountItem, dashboardItem].filter(Boolean);
+  const guestOnlyItems = [...guestAccountItems, requestFormItem].filter(Boolean);
+
   if (authedOnlyItems.length || guestOnlyItems.length) {
     const applyAuthVisibility = (authed) => {
       authedOnlyItems.forEach((li) => { li.hidden = !authed; });
       guestOnlyItems.forEach((li) => { li.hidden = Boolean(authed); });
     };
-    applyAuthVisibility(Boolean(events.lastPayload('authenticated')));
-    events.on('authenticated', (authed) => applyAuthVisibility(Boolean(authed)), { eager: true });
+    applyAuthVisibility(Boolean(
+      events.lastPayload('authenticated') || getCookie('auth_dropin_firstname'),
+    ));
+    events.on('authenticated', (authed) => applyAuthVisibility(Boolean(
+      authed || getCookie('auth_dropin_firstname'),
+    )), { eager: true });
   }
 
   const navTools = nav.querySelector('.nav-tools');
+  navTools.textContent = '';
 
   /** Wishlist */
   const wishlist = document.createRange().createContextualFragment(`

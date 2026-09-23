@@ -51,13 +51,17 @@ body.dashboard-page > main {
   grid-row: unset;
 }
 
-/* Kill the EDS section wrapper constraints */
+/* Kill the EDS section wrapper constraints. `!important` on both `display`
+   declarations keeps this the single source of truth for section visibility
+   no matter what order per-block CSS files load in — a later-loaded block
+   stylesheet cannot silently re-show a non-dashboard section (or hide the
+   active one) and split main's width between two flexed sections. */
 body.dashboard-page main > .section {
-  display: none;
+  display: none !important;
 }
 
 body.dashboard-page main > .section.bodea-dashboard-section {
-  display: flex;
+  display: flex !important;
   flex: 1 1 100%;
   min-width: 0;
   padding: 0 !important;
@@ -199,11 +203,31 @@ main .bodea-dashboard a:not(.dropin-design a):hover {
 }
 
 /* Nav list */
+.bodea-nav__menus {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0;
+}
+
+.bodea-nav__section--account {
+  border-top: 1px solid rgb(255 255 255 / 12%);
+  margin-top: 14px;
+  padding-top: 14px;
+}
+
+.bodea-nav__section-heading {
+  color: rgb(255 255 255 / 60%);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0 24px 8px;
+  text-transform: uppercase;
+}
+
 .bodea-nav__list {
   list-style: none;
   margin: 0;
-  padding: 16px 0;
-  flex: 1;
+  padding: 0;
 }
 
 .bodea-nav__item {

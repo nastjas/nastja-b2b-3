@@ -6,7 +6,7 @@
  */
 
 import { getCodeAssetUrl, rootLink } from '../../scripts/commerce.js';
-import { NAV_ITEMS } from './dashboard-config.js';
+import { ACCOUNT_NAV_ITEMS, PRIMARY_NAV_ITEMS } from './dashboard-config.js';
 
 /* ── SVG Icons ─────────────────────────────────────────────────────────── */
 
@@ -66,9 +66,15 @@ const ICONS = {
     <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
   </svg>`,
 
-  complaints: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M3 7v6a2 2 0 0 0 2 2h11l4 4V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"/>
-    <path d="M9 15l6-6M15 15L9 9"/>
+  returns: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M9 14 4 9l5-5"/>
+    <path d="M4 9h10a6 6 0 0 1 6 6v4"/>
+  </svg>`,
+
+  requisitionLists: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+    <rect x="9" y="3" width="6" height="4" rx="1"/>
+    <path d="M9 12h6M9 16h6"/>
   </svg>`,
 
   quickOrder: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -119,6 +125,27 @@ function buildNavItem(item, pathname) {
   return li;
 }
 
+function buildNavSection(label, items, pathname, modifier) {
+  const section = document.createElement('div');
+  section.className = `bodea-nav__section bodea-nav__section--${modifier}`;
+
+  if (label) {
+    const heading = document.createElement('h2');
+    heading.className = 'bodea-nav__section-heading';
+    heading.textContent = label;
+    section.appendChild(heading);
+  }
+
+  const list = document.createElement('ul');
+  list.className = 'bodea-nav__list';
+  list.setAttribute('role', 'list');
+  list.setAttribute('aria-label', label || 'Dashboard');
+  items.forEach((item) => list.appendChild(buildNavItem(item, pathname)));
+  section.appendChild(list);
+
+  return section;
+}
+
 /* ── Builder ───────────────────────────────────────────────────────────── */
 
 /**
@@ -142,16 +169,11 @@ export function buildNav(pathname) {
   `;
   nav.appendChild(logoArea);
 
-  /* Nav items */
-  const ul = document.createElement('ul');
-  ul.className = 'bodea-nav__list';
-  ul.setAttribute('role', 'list');
-
-  NAV_ITEMS.forEach((item) => {
-    ul.appendChild(buildNavItem(item, pathname));
-  });
-
-  nav.appendChild(ul);
+  const menus = document.createElement('div');
+  menus.className = 'bodea-nav__menus';
+  menus.appendChild(buildNavSection('', PRIMARY_NAV_ITEMS, pathname, 'primary'));
+  menus.appendChild(buildNavSection('My Account', ACCOUNT_NAV_ITEMS, pathname, 'account'));
+  nav.appendChild(menus);
 
   /* Footer */
   const footer = document.createElement('div');

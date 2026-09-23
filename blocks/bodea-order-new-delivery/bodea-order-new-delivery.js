@@ -635,12 +635,39 @@ function renderEquipmentSubtotalBar(state) {
   `;
 }
 
+function getEquipmentSkuPrice(state, sku) {
+  const p = state.ui?.equipmentPrices?.[sku];
+  return (p && typeof p.value === 'number') ? p : null;
+}
+
+/**
+ * A SKU is only selectable/orderable once prices have loaded AND a Commerce
+ * price actually resolved for it. While prices are still loading, treat SKUs
+ * as available so controls aren't disabled prematurely.
+ */
+function isEquipmentSkuAvailable(state, sku) {
+  if (!state.ui?.equipmentPricesLoaded) {
+    return true;
+  }
+  return getEquipmentSkuPrice(state, sku) != null;
+}
+
+/**
+ * Removes any already-selected equipment lines whose SKU has no resolved
+ * Commerce price once prices have finished loading — a product without a
+ * catalog price must not remain selectable/orderable.
+ */
+function pruneUnavailableEquipmentSelections(state) {
+  state.data.equipment = (state.data.equipment || [])
+    .filter((line) => !line.sku || isEquipmentSkuAvailable(state, line.sku));
+}
+
 function renderEquipmentUnitPrice(state, sku) {
   if (!state.ui?.equipmentPricesLoaded) {
     return '';
   }
-  const p = state.ui?.equipmentPrices?.[sku];
-  if (p && typeof p.value === 'number') {
+  const p = getEquipmentSkuPrice(state, sku);
+  if (p) {
     const formatted = formatMoneyAmount(p.value, p.currency);
     return (
       '<div class="ond-equipment-card__price">'
@@ -648,7 +675,7 @@ function renderEquipmentUnitPrice(state, sku) {
       + ' <span class="ond-equipment-card__per">/ pack</span></div>'
     );
   }
-  return '<div class="ond-equipment-card__price ond-equipment-card__price--muted">Price unavailable</div>';
+  return '<div class="ond-equipment-card__price ond-equipment-card__price--unavailable">Not available in your company catalog</div>';
 }
 
 function formatMaterial(material) {
@@ -662,11 +689,17 @@ function renderEquipmentCards(state, errors) {
   const cards = EQUIPMENT_PRODUCTS.map((product) => {
     const qty = getEquipmentQuantity(state, product.sku);
     const isSelected = qty > 0;
+    const available = isEquipmentSkuAvailable(state, product.sku);
     const shortName = product.label;
     const priceRow = renderEquipmentUnitPrice(state, product.sku);
+    const cardClasses = [
+      'ond-equipment-card',
+      isSelected ? 'is-selected' : '',
+      available ? '' : 'is-unavailable',
+    ].filter(Boolean).join(' ');
 
     return `
-      <div class="ond-equipment-card${isSelected ? ' is-selected' : ''}">
+      <div class="${cardClasses}">
         <div class="ond-equipment-card__top">
           <div class="ond-equipment-card__icon">
             ${renderTireProductIcon(product.material)}
@@ -686,7 +719,7 @@ function renderEquipmentCards(state, errors) {
               data-qty-change="-1"
               data-qty-sku="${escapeHtml(product.sku)}"
               aria-label="Decrease quantity for ${escapeHtml(shortName)}"
-              ${qty === 0 ? 'disabled' : ''}
+              ${(qty === 0 || !available) ? 'disabled' : ''}
             >−</button>
             <input
               type="number"
@@ -697,6 +730,7 @@ function renderEquipmentCards(state, errors) {
               step="1"
               aria-label="Quantity for ${escapeHtml(shortName)}"
               inputmode="numeric"
+              ${available ? '' : 'disabled aria-disabled="true"'}
             >
             <button
               type="button"
@@ -704,6 +738,7 @@ function renderEquipmentCards(state, errors) {
               data-qty-change="1"
               data-qty-sku="${escapeHtml(product.sku)}"
               aria-label="Increase quantity for ${escapeHtml(shortName)}"
+              ${available ? '' : 'disabled aria-disabled="true"'}
             >+</button>
           </div>
         </div>
@@ -1554,6 +1589,7 @@ function buildTopBar(navElement) {
 
 function renderShell(block) {
   document.body.classList.add('dashboard-page');
+  block.closest('.section')?.classList.add('bodea-dashboard-section');
   block.innerHTML = '';
   block.classList.add('bodea-order-new-delivery', 'bodea-order-new-delivery-shell');
 
@@ -1650,11 +1686,13 @@ export default async function decorate(block) {
       .then((prices) => {
         state.ui.equipmentPrices = prices;
         state.ui.equipmentPricesLoaded = true;
+        pruneUnavailableEquipmentSelections(state);
         renderBlock(wizardContainer, state);
       })
       .catch((err) => {
         console.warn('bodea-order-new-delivery: Could not load SKU prices.', err);
         state.ui.equipmentPricesLoaded = true;
+        pruneUnavailableEquipmentSelections(state);
         renderBlock(wizardContainer, state);
       });
   }

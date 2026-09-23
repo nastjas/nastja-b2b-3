@@ -219,6 +219,7 @@ export default async function decorate(block) {
   }
 
   document.body.classList.add('dashboard-page', 'company-users-page');
+  block.closest('.section')?.classList.add('bodea-dashboard-section');
   block.innerHTML = '';
   block.classList.add('bodea-company-users', 'bodea-company-users-shell');
 

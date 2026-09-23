@@ -172,6 +172,15 @@ main {
   grid-row: 2;
 }
 
+/* /customer/account and /customer/company/* are restructured into the Bodea
+   dashboard workspace shell by scripts/account-workspace.js after `.appear`
+   is already set (it needs blocks decorated first). Keep `main` invisible
+   until that restructuring — and its `bodea-dashboard.css` load — finishes,
+   so the old two-column "columns" template layout is never painted. */
+body.account-workspace-pending main {
+  visibility: hidden;
+}
+
 footer {
   grid-row: 3;
 }

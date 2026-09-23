@@ -110,7 +110,7 @@
   display: inline-block;
   margin-top: var(--spacing-small);
   padding: 12px 28px;
-  background-color: var(--ms-red);
+  background-color: var(--ms-blue);
   color: var(--ms-white);
   font-weight: 700;
   border-radius: var(--shape-border-radius-1);
@@ -118,7 +118,7 @@
 }
 
 .hero.welcome a:hover {
-  background-color: #b00016;
+  background-color: var(--ms-blue-dark);
 }
 
 @media (min-width: 900px) {

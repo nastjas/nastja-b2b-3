@@ -51,33 +51,32 @@ body.dashboard-page > main {
   grid-row: unset;
 }
 
+/* Hide every EDS section by default; only the section that actually hosts the
+   dashboard block should ever take up main's width. Kept in sync with
+   bodea-dashboard.css so load order can't cause two sections to split the
+   available width 50/50. */
 body.dashboard-page main > .section {
-  display: flex;
-  flex: 1;
-  min-width: 0;
-  padding: 0 !important;
-  margin: 0 !important;
-  max-width: 100% !important;
-  width: 100%;
-}
-
-body.dashboard-page main > .section > div {
-  display: flex;
-  flex: 1;
-  min-width: 0;
-  width: 100%;
-  max-width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* When company users block is present, hide other sections so our shell takes full main */
-body.dashboard-page main > .section:not(:has(.bodea-company-users)) {
   display: none !important;
 }
 
-body.dashboard-page main > .section:has(.bodea-company-users) {
+body.dashboard-page main > .section.bodea-dashboard-section {
+  display: flex !important;
   flex: 1 1 100%;
+  min-width: 0;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  width: 100%;
+}
+
+body.dashboard-page main > .section.bodea-dashboard-section > div {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .bodea-company-users-shell {
@@ -237,11 +236,34 @@ body.dashboard-page main > .section:has(.bodea-company-users) {
   mix-blend-mode: lighten; /* Makes black background transparent, white logo visible */
 }
 
+/* Nav list wrapper — dashboard-nav.js groups items into an "Account" section
+   below the primary nav; without these rules (kept in sync with
+   bodea-dashboard.css) that section renders as an unstyled heading + list. */
+.bodea-nav__menus {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0;
+}
+
+.bodea-nav__section--account {
+  border-top: 1px solid rgb(255 255 255 / 12%);
+  margin-top: 14px;
+  padding-top: 14px;
+}
+
+.bodea-nav__section-heading {
+  color: rgb(255 255 255 / 60%);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0 24px 8px;
+  text-transform: uppercase;
+}
+
 .bodea-nav__list {
   list-style: none;
   margin: 0;
-  padding: 16px 0;
-  flex: 1;
+  padding: 0;
 }
 
 .bodea-nav__item {

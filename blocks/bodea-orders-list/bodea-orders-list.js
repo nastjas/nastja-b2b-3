@@ -372,6 +372,7 @@ function setTopBarCustomerName(block, customer) {
 
 function renderShell(block) {
   document.body.classList.add('dashboard-page');
+  block.closest('.section')?.classList.add('bodea-dashboard-section');
   block.innerHTML = '';
   block.classList.add('bodea-orders-list', 'bodea-orders-list-shell');
 

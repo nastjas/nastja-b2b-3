@@ -21,6 +21,7 @@ import {
   IS_UE,
   IS_DA,
 } from './commerce.js';
+import enhanceAccountWorkspace, { matchesWorkspacePath } from './account-workspace.js';
 
 /*
  * Trusted Types default policy.
@@ -113,11 +114,36 @@ function buildWidgetAutoBlocks(main) {
 }
 
 /**
+ * Injects a "Bodea Support" block on `/support` when the page has not been
+ * authored with one yet (e.g. it still carries the aem-boilerplate-commerce
+ * placeholder content). This lets the dashboard support view render without
+ * requiring a content change first; once the page is authored with a real
+ * `Bodea Support` block, this is a no-op.
+ * @param {Element} main The container element
+ */
+function buildSupportPageAutoBlock(main) {
+  const { pathname } = window.location;
+  if (pathname !== '/support' && !pathname.startsWith('/support/')) return;
+  // Only ever run on the real page `main` — `decorateMain` is also invoked on
+  // detached fragment documents (e.g. the header/footer nav fragments), which
+  // must not be turned into a support page too.
+  if (main !== document.querySelector('main')) return;
+  if (main.querySelector('.bodea-support')) return;
+
+  const supportBlock = buildBlock('bodea-support', '');
+  const section = document.createElement('div');
+  section.append(supportBlock);
+  main.replaceChildren(section);
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
 function buildAutoBlocks(main) {
   try {
+    buildSupportPageAutoBlock(main);
+
     // auto load `*/fragments/*` references
     const fragments = [...main.querySelectorAll('a[href*="/fragments/"]')].filter((f) => !f.closest('.fragment'));
     if (fragments.length > 0) {
@@ -201,6 +227,15 @@ async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
 
+  // /customer/account and /customer/company/* are restructured into the
+  // Bodea dashboard workspace shell later, in loadLazy (account-workspace.js)
+  // — once blocks are decorated and its CSS has loaded. Hide `main` for the
+  // duration so the CMS-authored "columns" template layout it starts from
+  // never gets a chance to paint once `body.appear` is added below.
+  if (matchesWorkspacePath(window.location.pathname)) {
+    document.body.classList.add('account-workspace-pending');
+  }
+
   const main = doc.querySelector('main');
   if (main) {
     try {
@@ -235,6 +270,10 @@ async function loadLazy(doc) {
 
   const main = doc.querySelector('main');
   await loadSections(main);
+
+  // Present /customer/account and /customer/company/* pages in the shared
+  // Bodea dashboard workspace (left nav + top bar + full-width content).
+  enhanceAccountWorkspace(main).catch(() => { /* non-critical enhancement */ });
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;

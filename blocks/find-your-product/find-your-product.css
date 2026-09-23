@@ -48,7 +48,7 @@
   padding: 0 28px;
   border: none;
   border-radius: var(--shape-border-radius-1);
-  background-color: var(--ms-red);
+  background-color: var(--ms-blue);
   color: var(--ms-white);
   font-weight: 700;
   font-size: 1rem;
@@ -57,7 +57,7 @@
 }
 
 .find-your-product .fyp-submit:hover {
-  background-color: #b00016;
+  background-color: var(--ms-blue-dark);
 }
 
 @media (min-width: 900px) {
