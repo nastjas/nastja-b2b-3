@@ -3,7 +3,6 @@
 Guest inquiry form (RFP F-17) for non-logged-in visitors:
 
 - **Your request** — multi-line message (required)
-- **Product / category** — selection (required)
 - **Contact details** — name (required), company, email (required), phone
 
 On submit it validates and shows a confirmation. **Demo only** — no backend
