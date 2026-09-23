@@ -108,7 +108,7 @@
   display: inline-block;
   margin-top: var(--spacing-small, 12px);
   padding: 12px 28px;
-  background-color: var(--ms-red, #d10019);
+  background-color: var(--ms-blue, #005da9);
   color: var(--ms-white, #fff);
   font-weight: 700;
   border-radius: var(--shape-border-radius-1, 4px);
@@ -116,7 +116,7 @@
 }
 
 .hero-carousel__panel a:hover {
-  background-color: #b00016;
+  background-color: var(--ms-blue-dark, #004a87);
 }
 
 /* Arrows */

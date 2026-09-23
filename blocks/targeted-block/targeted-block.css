@@ -47,14 +47,14 @@
   margin-top: 6px;
   padding: 10px 22px;
   border-radius: 8px;
-  background: var(--ms-red, #d10019);
+  background: var(--ms-blue, #005da9);
   color: #fff;
   font-weight: 700;
   text-decoration: none;
 }
 
 .targeted-block:has(h3) a:hover {
-  background: #b00016;
+  background: var(--ms-blue-dark, #004a87);
 }
 
 @media (min-width: 900px) {

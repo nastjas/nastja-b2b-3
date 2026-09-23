@@ -66,7 +66,7 @@
   padding: 12px 28px;
   border: 0;
   border-radius: 8px;
-  background: var(--ms-red, #d10019);
+  background: var(--ms-blue, #005da9);
   color: #fff;
   font-weight: 700;
   font-size: 1rem;
@@ -74,7 +74,7 @@
 }
 
 .request-form__submit:hover {
-  background: #b00016;
+  background: var(--ms-blue-dark, #004a87);
 }
 
 .request-form__submit:disabled {

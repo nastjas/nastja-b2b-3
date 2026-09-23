@@ -3,15 +3,14 @@ import { render as authRenderer } from '@dropins/storefront-auth/render.js';
 import { AuthCombine } from '@dropins/storefront-auth/containers/AuthCombine.js';
 import { SuccessNotification } from '@dropins/storefront-auth/containers/SuccessNotification.js';
 import * as authApi from '@dropins/storefront-auth/api.js';
-import { events } from '@dropins/tools/event-bus.js';
 import { Button, provider as UI } from '@dropins/tools/components.js';
 import {
   CUSTOMER_LOGIN_PATH,
   CUSTOMER_ACCOUNT_PATH,
   CUSTOMER_FORGOTPASSWORD_PATH,
   rootLink,
-  getProductLink,
 } from '../../scripts/commerce.js';
+import { matchesPath } from './route-utils.js';
 
 const signInFormConfig = {
   renderSignUpLink: true,
@@ -207,79 +206,16 @@ const onHeaderLinkClick = (element) => {
 };
 
 const renderAuthCombine = (navSections, toggleMenu) => {
-  if (getCookie('auth_dropin_firstname')) return;
+  const loginLink = [...navSections.querySelectorAll('a[href]')]
+    .find((link) => matchesPath(link.href, CUSTOMER_LOGIN_PATH));
+  if (!loginLink) return;
 
-  const navListEl = navSections.querySelector('.default-content-wrapper > ul');
-
-  const listItems = navListEl.querySelectorAll(
-    '.default-content-wrapper > ul > li',
-  );
-
-  const accountLi = Array.from(listItems).find((li) => li.textContent.includes('Account'));
-
-  if (accountLi) {
-    const accountLiItems = accountLi.querySelectorAll('ul > li');
-    const authCombineLink = accountLiItems[accountLiItems.length - 1];
-
-    authCombineLink.classList.add('authCombineNavElement');
-    const text = authCombineLink.textContent || '';
-    authCombineLink.innerHTML = `<a href="#">${text}</a>`;
-    authCombineLink.addEventListener('click', (event) => {
-      event.preventDefault();
-      onHeaderLinkClick(accountLi);
-
-      function getPopupElements() {
-        const headerBlock = document.querySelector('.header.block');
-        const headerLoginButton = document.querySelector('#header-login-button');
-        const popupElement = document.querySelector('#popup-menu');
-        const popupMenuContainer = document.querySelector('.popupMenuContainer');
-
-        return {
-          headerBlock,
-          headerLoginButton,
-          popupElement,
-          popupMenuContainer,
-        };
-      }
-
-      events.on('authenticated', (isAuthenticated) => {
-        const authCombineNavElement = document.querySelector(
-          '.authCombineNavElement',
-        );
-        if (isAuthenticated) {
-          const { headerLoginButton, popupElement, popupMenuContainer } = getPopupElements();
-
-          if (
-            !authCombineNavElement
-          || !headerLoginButton
-          || !popupElement
-          || !popupMenuContainer
-          ) {
-            return;
-          }
-
-          authCombineNavElement.style.display = 'none';
-          popupMenuContainer.innerHTML = '';
-          popupElement.style.minWidth = '250px';
-          if (headerLoginButton) {
-            const spanElementText = headerLoginButton.querySelector('span');
-            spanElementText.textContent = `Hi, ${getCookie(
-              'auth_dropin_firstname',
-            )}`;
-          }
-          popupMenuContainer.insertAdjacentHTML(
-            'afterend',
-            `<ul class="popupMenuUrlList">
-              <li><a href="${rootLink(CUSTOMER_ACCOUNT_PATH)}">My Account</a></li>
-              <li><a href="${getProductLink('hollister-backyard-sweatshirt', 'MH05')}">Product page</a></li>
-              <li><button class="logoutButton">Logout</button></li>
-            </ul>`,
-          );
-        }
-      });
-      toggleMenu?.();
-    });
-  }
+  loginLink.closest('li')?.classList.add('authCombineNavElement');
+  loginLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    onHeaderLinkClick(loginLink);
+    toggleMenu?.();
+  });
 };
 
 export default renderAuthCombine;
