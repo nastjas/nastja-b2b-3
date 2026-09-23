@@ -1,10 +1,10 @@
 /* ==========================================================================
    Bodea Dashboard — Full Enterprise UI Styles
-   Brand: Continental
+   Brand: Infineon
    ========================================================================== */
 
 /* ── Design tokens the dashboard/order blocks expect but that the
-      Continental theme doesn't define. Scoped to the dashboard page so they
+      storefront theme doesn't define. Scoped to the dashboard page so they
       never leak into the rest of the site. Dark surfaces drive the left nav
       and the top welcome banner (white text sits on them). ──────────────── */
 
@@ -17,8 +17,16 @@ body.dashboard-page {
   --color-surface-dark: #141414;      /* near-black nav / banner base */
   --color-surface-dark-mid: #232323;  /* slightly lighter gradient stop */
   --color-neutral-0: #fff;
-  --color-accent-500: var(--conti-orange);
-  --color-accent-600: var(--conti-orange-hover);
+  --infineon-logo-blue: #005da9;
+  --infineon-logo-blue-dark: #004a87;
+  --color-brand-300: #80aed4;
+  --color-brand-500: var(--infineon-logo-blue);
+  --color-brand-600: var(--infineon-logo-blue-dark);
+  --color-brand-700: #003b70;
+  --color-button-active: var(--infineon-logo-blue-dark);
+  --color-button-hover: var(--infineon-logo-blue-dark);
+  --color-accent-500: var(--infineon-logo-blue);
+  --color-accent-600: var(--infineon-logo-blue-dark);
   --color-teal-500: #57534e;
 
   /* Override body grid layout from styles.css */
