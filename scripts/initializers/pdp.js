@@ -65,10 +65,12 @@ function preloadPDPAssets() {
 
   // Extract and preload main product image
   const imageUrl = extractMainImageUrl();
+  const isDefaultMetaImage = imageUrl
+    && new URL(imageUrl, window.location.href).pathname.endsWith('/default-meta-image.png');
 
-  if (imageUrl) {
+  if (imageUrl && !isDefaultMetaImage) {
     preloadFile(imageUrl, 'image');
-  } else {
+  } else if (!imageUrl) {
     console.warn('Unable to infer main image from JSON-LD or meta tags');
   }
 }
